@@ -1,0 +1,67 @@
+It is often useful to generate random numbers to produce simulations or games (or homework problems 
+One way to generate these numbers in C++ is to use the function rand(). Rand is defined as:
+The rand function takes no arguments and returns an integer that is a pseudo-random number between 
+0 and RAND_MAX. On transformer, RAND_MAX is 2147483647. What is a pseudo-random number? It 
+is a number that is not truly random, but appears random. That is, every number between 0 and 
+RAND_MAX has an equal chance (or probability) of being chosen each time rand() is called. (In reality, 
+this is not the case, but it is close). 
+For example, the following program might print out:
+
+Here we “randomly” were given numbers between 0 and RAND_MAX. What if we only wanted numbers 
+between 1 and 10? We will need to scale the results. To do this we can use the modulus (%) operator.
+Any integer modulus 10 will produce a number from 0-9. In other words, if we divide a number by 10, 
+the remainder has to be from 0 to 9. It’s impossible to divide a number by 10 and end up with a 
+remainder bigger than or equal to ten. In our case:
+
+Consequently, we can take rand() % 10 to give us numbers from 0-9. If we want numbers from 1-10 we 
+can now just scale up by adding one. The final result is:
+cout << (rand() % 10) + 1 << endl;
+If you run this program many times, you’ll quickly notice that you end up with the same sequence of 
+random numbers each time. This is because these numbers are not truly random, but pseudorandom. 
+Repeat calls to rand merely return numbers from some sequence of numbers that appears to be 
+random. Each time we call rand, we get the next number in the sequence.
+If we want to get a different sequence of numbers for each execution, we need to go through a process 
+of randomizing. Randomizing is “seeding” the random number sequence, so we start in a different 
+place. The function that does this is srand() which takes an integer as the seed:
+void srand(int seed);
+It is important to only invoke the srand call ONCE at the beginning of the program. There is no need 
+for repeat calls to seed the random number generator (in fact, it will make your number less evenly 
+distributed). 
+A commonly used technique is to seed the random number generator using the clock. The time() 
+function will return the computer’s time. On transformer, this is expressed in terms of the number of 
+seconds that have elapsed since Jan 1, 1970 (the Epoch). The function time(NULL) will return the 
+number of seconds elapsed in computer time.
+#include <ctime>
+srand(time(NULL));
+cout << (rand() %10) + 1;
+This produces different values each time the program is run.
+Call By Value – C++ and Java
+Both Java and C++ invoke functions using a mechanism called “Call By Value”. If we pass a variable to a 
+function then the function gets the value contained in the variable. However, any changes that are 
+made to the variable in the function are not reflected back in the calling program. These parameters are 
+considered local variables. To illustrate, consider the following:
+void ChangeValues(int x); // Prototype
+int main()
+{
+int x=5;
+ChangeValues(x);
+cout << “Back in main: “ << x << endl;
+return 0;
+}
+void ChangeValues(int x)
+{
+cout << “In change values: “ << x << endl;
+x = 10;
+cout << “In change values: “ << x << endl;
+return;
+}
+When this program is run, we get:
+In change values: 5
+In change values: 10
+Back in main: 5
+Note that inside the function ChangeValues, we initially get x=5, or the value that was assigned in main 
+to x. Then x is changed to 10, and the new change is reflected in the print statement. However, when 
+we return back to the main function, x is unchanged and is back to 5. 
+The parameter x inside ChangeValues is referred to as a local variable, because changes to it are only 
+enforced within the scope of the function. We’ll have more to say about scoping later. Note that we 
+can still have functions that use pass by value, but return a value
