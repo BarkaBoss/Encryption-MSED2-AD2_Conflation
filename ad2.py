@@ -1,12 +1,15 @@
 from msed2_encrypt import msed2
+from xor_encryption import XOR
+
 import os
 import math
 
 class AD2:
 
+    xor = XOR()
     msed2_alg = msed2()
-    #msed2_alg
-    password = '' 
+    password = ''
+
     def read_pwd(self):
         with open('password.txt') as pass_file:
             self.password = str(pass_file.readline())
@@ -24,6 +27,7 @@ class AD2:
             CHUNK_SIZE = int(math.ceil(file_size/2))
             file_number = 1
             with open(file_name,'rb') as f:
+                self.xor.scramble()
                 chunk = f.read(CHUNK_SIZE)
                 while chunk:
                     with open(file_name+'_part' + str(file_number)+'.txt', 'wb') as chunk_file:
