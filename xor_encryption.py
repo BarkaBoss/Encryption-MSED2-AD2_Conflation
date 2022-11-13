@@ -30,7 +30,6 @@ class XOR:
                 else:
                     self.new_word = self.new_word + word + " "
 
-                # "Append to <filename>Scrambled.txt"
 
         with open("XOR.txt", 'a+') as fout:
             fout.write(self.new_word + "\n")
