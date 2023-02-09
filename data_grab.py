@@ -4,7 +4,7 @@ import random
 
 length_of_records = 10
 
-with open('crypt_data.csv', mode='w') as file:
+with open('data/crypt_data.csv', mode='w') as file:
     csv_writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     csv_writer.writerow(['Execution Time'])
 

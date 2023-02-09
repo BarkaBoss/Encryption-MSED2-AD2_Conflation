@@ -31,7 +31,7 @@ class XOR:
                     self.new_word = self.new_word + word + " "
 
 
-        with open("XOR.txt", 'a+') as fout:
+        with open("data/XOR.txt", 'a+') as fout:
             fout.write(self.new_word + "\n")
 
         self.new_word = ""
